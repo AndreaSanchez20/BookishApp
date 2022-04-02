@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-
+//andrea
 public class BookListActivity extends AppCompatActivity {
     public static final String BOOK_DETAIL_KEY = "book";
     private ListView lvBooks;
