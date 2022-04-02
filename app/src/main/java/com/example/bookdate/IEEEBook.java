@@ -9,12 +9,12 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Book implements Serializable {
-    public String openLibraryId;
-    public String author;
-    public String title;
-    public String description;
-    public String IEEEpublisher;
+public class IEEEBook implements Serializable {
+    private String openLibraryId;
+    private String author;
+    private String title;
+    private String description;
+    private String IEEEpublisher;
 
     public String getOpenLibraryId() {
         return openLibraryId;
@@ -28,9 +28,7 @@ public class Book implements Serializable {
         return author;
     }
 
-    public String getDescription(){return description;}
-
-    public String getIEEEpublisher(){return IEEEpublisher;}
+    public String getPublisher(){return IEEEpublisher;}
 
     // Get medium sized book cover from covers API
     public String getCoverUrl() {
@@ -47,15 +45,13 @@ public class Book implements Serializable {
         try {
             // Deserialize json into object fields
             // Check if a cover edition is available
-            if (jsonObject.has("cover_edition_key"))  {
-                book.openLibraryId = jsonObject.getString("cover_edition_key");
-            } else if(jsonObject.has("edition_key")) {
-                final JSONArray ids = jsonObject.getJSONArray("edition_key");
-                book.openLibraryId = ids.getString(0);
+            if (jsonObject.has("doi"))  {
+                book.openLibraryId = jsonObject.getString("doi");
             }
-            book.title = jsonObject.has("title_suggest") ? jsonObject.getString("title_suggest") : "";
+            book.title = jsonObject.has("title") ? jsonObject.getString("title") : "";
             book.author = getAuthor(jsonObject);
-            book.IEEEpublisher = jsonObject.has("IEEEpublisher") ? jsonObject.getString("publisher") : "";
+            book.description = jsonObject.has("abstract") ? jsonObject.getString("abstract"):""; //abstract for IEEE research
+            book.IEEEpublisher = jsonObject.has("publisher") ? jsonObject.getString("publisher"):"";
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -67,11 +63,16 @@ public class Book implements Serializable {
     // Return comma separated author list when there is more than one author
     private static String getAuthor(final JSONObject jsonObject) {
         try {
-            final JSONArray authors = jsonObject.getJSONArray("author_name");
-            int numAuthors = authors.length();
+            //final JSONArray authors = jsonObject.getJSONArray("authors");
+            JSONArray jsonArrayAuthors = jsonObject.getJSONObject("authors").getJSONArray("authors");
+            int numAuthors = jsonArrayAuthors.length();
             final String[] authorStrings = new String[numAuthors];
+            JSONObject author = new JSONObject();
+            // JSONArray JSONArrayAuthors = jsonObjectOneMemberInfo.getJSONArray("occupation");
             for (int i = 0; i < numAuthors; ++i) {
-                authorStrings[i] = authors.getString(i);
+                //author.getJSONArray("authors");
+                author = jsonArrayAuthors.getJSONObject(i);
+                authorStrings[i] = author.getString("full_name");
             }
             return TextUtils.join(", ", authorStrings);
         } catch (JSONException e) {
@@ -91,7 +92,7 @@ public class Book implements Serializable {
                 e.printStackTrace();
                 continue;
             }
-            Book book = Book.fromJson(bookJson);
+            Book book = IEEEBook.fromJson(bookJson);
             if (book != null) {
                 books.add(book);
             }

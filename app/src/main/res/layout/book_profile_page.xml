@@ -18,25 +18,25 @@
 
             <ImageView
                 android:id="@+id/ivBookCover"
-                android:layout_width="280dp"
-                android:layout_height="280dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="8dp" />
 
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textSize="32sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/tvAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textSize="22sp" />
+                android:textSize="10sp" />
 
             <View
                 android:layout_width="280dp"
@@ -49,26 +49,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Published By"
-                android:textSize="14sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/tvPublisher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/tvPageCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="14sp" />
+                android:layout_marginTop="2dp"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvDescription"
+                android:textSize="14sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="8dp"/>
 
             <Button
                 android:id="@+id/button_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="add to Playlist" />
+                android:text="add to Playlist"
+                />
         </LinearLayout>
     </ScrollView>
 

@@ -7,7 +7,8 @@ import android.widget.Toast;
 
 import com.example.bookdate.PlaylistAdapter;
 import com.example.bookdate.R;
-import com.example.bookdate.models.Post;
+
+import com.example.bookdate.models.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +29,7 @@ public class Playlist {
     private FirebaseAuth mAuth;
     private static final String URLDB = "https://bookdate-6a2ab-default-rtdb.firebaseio.com/";
     private static final String TAG = "NewPlayList";
-    public ArrayList<Post> resultplaylist = new ArrayList<>();
+    public ArrayList<Post> resultplaylist = new ArrayList<Post>();
     ListView mListView;
 
 
