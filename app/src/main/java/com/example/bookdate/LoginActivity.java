@@ -28,10 +28,18 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
-    public void goToSearch(View view){
+    public void goToSearchOpenLibrary(View view){
+        String[] userInfo=getIntent().getStringArrayExtra("key");
+        Intent intent = new Intent(LoginActivity.this, BookListActivity.class);
+        intent.putExtra("key3",userInfo); // para que es esto?
+        intent.putExtra("source","OpenLibrary");
+        startActivity(intent);
+    }
+    public void goToSearchIEEE(View view){
         String[] userInfo=getIntent().getStringArrayExtra("key");
         Intent intent = new Intent(LoginActivity.this, BookListActivity.class);
         intent.putExtra("key3",userInfo);
+        intent.putExtra("source","IEEE");
         startActivity(intent);
     }
 

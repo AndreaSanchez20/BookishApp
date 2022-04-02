@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+//import com.example.bookdate.ui;
 import com.example.bookdate.ui.Playlist;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
@@ -38,6 +39,7 @@ public class BookDetailActivity extends AppCompatActivity {
     private TextView tvAuthor;
     private TextView tvPublisher;
     private TextView tvPageCount;
+    private TextView tvDescription;
     private BookClient client;
     private Button as_button_add;
 
@@ -51,6 +53,8 @@ public class BookDetailActivity extends AppCompatActivity {
         tvAuthor = (TextView) findViewById(R.id.tvAuthor);
         tvPublisher = (TextView) findViewById(R.id.tvPublisher);
         tvPageCount = (TextView) findViewById(R.id.tvPageCount);
+        tvDescription = (TextView) findViewById(R.id.tvDescription);
+
         as_button_add = findViewById(R.id.button_add);
         // Use the book to populate the data into our views
         Book book = (Book) getIntent().getSerializableExtra(BookListActivity.BOOK_DETAIL_KEY);
@@ -74,6 +78,8 @@ public class BookDetailActivity extends AppCompatActivity {
         Picasso.with(this).load(Uri.parse(book.getLargeCoverUrl())).error(R.drawable.ic_no_cover).into(ivBookCover);
         tvTitle.setText(book.getTitle());
         tvAuthor.setText(book.getAuthor());
+        tvDescription.setText(book.getDescription());
+        tvPublisher.setText(book.getIEEEpublisher());
         // fetch extra book data from books API
         client = new BookClient();
         client.getExtraBookDetails(book.getOpenLibraryId(), new JsonHttpResponseHandler() {
@@ -89,6 +95,13 @@ public class BookDetailActivity extends AppCompatActivity {
                             publishers[i] = publisher.getString(i);
                         }
                         tvPublisher.setText(TextUtils.join(", ", publishers));
+                    }
+
+                    if (response.has("IEEEpublisher")) {
+                        tvPublisher.setText("IEEE");
+                    }
+                    if(response.has("abstract")){
+                        tvDescription.setText(response.getString("abstract"));
                     }
                     if (response.has("number_of_pages")) {
                         tvPageCount.setText(Integer.toString(response.getInt("number_of_pages")) + " pages");
