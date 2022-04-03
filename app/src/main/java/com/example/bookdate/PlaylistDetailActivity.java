@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +42,11 @@ public class PlaylistDetailActivity extends AppCompatActivity {
     private BookClient client;
     private Button as_button_remove;
     private ImageView ivBookCover;
+    private TextView text_view_tag;
+    private EditText edit_view_tag;
+    private Button button_submit;
+    String TAG="";
+    String tag_text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +58,10 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         tvPageCount = (TextView) findViewById(R.id.tvPageCount);
         ivBookCover = (ImageView) findViewById(R.id.ivBookCover);
         as_button_remove = findViewById(R.id.button_add);
+
+        text_view_tag = (TextView) findViewById(R.id.text_view_tag_name);
+        edit_view_tag = (EditText) findViewById(R.id.edit_text_tag);
+        button_submit = (Button) findViewById(R.id.button_submit);
         // Use the post to populate the data into our views
         String author = (String) getIntent().getSerializableExtra("author");
         tvAuthor.setText(author);
@@ -62,6 +72,21 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         String userId=(String) getIntent().getSerializableExtra("userId");
         String cover = (String) getIntent().getSerializableExtra("cover");
         Picasso.with(this).load(Uri.parse(cover)).error(R.drawable.ic_no_cover).into(ivBookCover);
+
+        tag_text = (String) getIntent().getSerializableExtra("tag");
+        //TAG
+
+
+
+        button_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TAG = edit_view_tag.getText().toString();
+                tag_text = TAG;
+                //DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                //Query databaseQuery = ref.child("user-playlist").child(userId).orderByChild("tag").equalTo(TAG);
+            }
+        });
 
         as_button_remove.setOnClickListener(new View.OnClickListener() {
             @Override

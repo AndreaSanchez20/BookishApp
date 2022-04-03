@@ -69,6 +69,7 @@ public class PlaylistActivity extends AppCompatActivity{
                 intent.putExtra("publisher", playlist.showDetails(position).publisher);
                 intent.putExtra("userId", playlist.showDetails(position).uid);
                 intent.putExtra("cover", playlist.showDetails(position).url);
+                intent.putExtra("tag", playlist.showDetails(position).tag);
                 startActivity(intent);
             }
 

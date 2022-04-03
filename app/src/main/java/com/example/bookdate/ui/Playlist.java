@@ -51,7 +51,7 @@ public class Playlist {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        writeNewPost(userId, author, title, body,url);
+                        writeNewPost(userId, author, title, body,url, "something");
 //                        User user = dataSnapshot.getValue(User.class);
                     }
 
@@ -62,11 +62,11 @@ public class Playlist {
                 });
     }
 
-    private void writeNewPost(String userId, String author, String title, String body,String url) {
+    private void writeNewPost(String userId, String author, String title, String body,String url, String tag) {
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
         String key = mDatabase.child("posts").push().getKey();
-        Post post = new Post(userId, author, title, body, 0,url);
+        Post post = new Post(userId, author, title, body, 0,url, "someth");
         Map<String, Object> postValues = post.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();

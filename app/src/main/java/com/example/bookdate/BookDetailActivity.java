@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ public class BookDetailActivity extends AppCompatActivity {
     private BookClient client;
     private Button as_button_add;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +57,12 @@ public class BookDetailActivity extends AppCompatActivity {
         tvPageCount = (TextView) findViewById(R.id.tvPageCount);
         tvDescription = (TextView) findViewById(R.id.tvDescription);
 
+
         as_button_add = findViewById(R.id.button_add);
         // Use the book to populate the data into our views
         Book book = (Book) getIntent().getSerializableExtra(BookListActivity.BOOK_DETAIL_KEY);
         loadBook(book);
+
 
         as_button_add.setOnClickListener(new View.OnClickListener() {
             @Override
