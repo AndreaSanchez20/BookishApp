@@ -43,13 +43,13 @@ public class PlaylistActivity extends AppCompatActivity{
     Playlist playlist;
     ArrayList<Post> arrayList;
 
-        @Override
+
+    @Override
         protected void onCreate(Bundle savedInstanceState) {
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.playlist);
             as_list_view_playlist = findViewById(R.id.list_view_myplaylist);
-
 
             playlist = new Playlist(this,as_list_view_playlist);
 
@@ -58,6 +58,8 @@ public class PlaylistActivity extends AppCompatActivity{
             setupBookSelectedListener();
 
         }
+
+
     private void setupBookSelectedListener() {
         as_list_view_playlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -69,6 +71,7 @@ public class PlaylistActivity extends AppCompatActivity{
                 intent.putExtra("publisher", playlist.showDetails(position).publisher);
                 intent.putExtra("userId", playlist.showDetails(position).uid);
                 intent.putExtra("cover", playlist.showDetails(position).url);
+                intent.putExtra("key", playlist.showDetails(position).key);
                 intent.putExtra("tag", playlist.showDetails(position).tag);
                 startActivity(intent);
             }

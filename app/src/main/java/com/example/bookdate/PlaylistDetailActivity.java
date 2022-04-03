@@ -2,6 +2,7 @@ package com.example.bookdate;
 
 import static com.google.android.gms.wearable.DataMap.TAG;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -31,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URI;
+import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -46,7 +48,7 @@ public class PlaylistDetailActivity extends AppCompatActivity {
     private EditText edit_view_tag;
     private Button button_submit;
     String TAG="";
-    String tag_text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,10 +72,11 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         String publisher = (String) getIntent().getSerializableExtra("publisher");
         tvPublisher.setText(publisher);
         String userId=(String) getIntent().getSerializableExtra("userId");
+        String key=(String) getIntent().getSerializableExtra("key");
         String cover = (String) getIntent().getSerializableExtra("cover");
         Picasso.with(this).load(Uri.parse(cover)).error(R.drawable.ic_no_cover).into(ivBookCover);
 
-        tag_text = (String) getIntent().getSerializableExtra("tag");
+       // tag_text = (String) getIntent().getSerializableExtra("tag");
         //TAG
 
 
@@ -82,10 +85,15 @@ public class PlaylistDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TAG = edit_view_tag.getText().toString();
-                tag_text = TAG;
-                //DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                //Query databaseQuery = ref.child("user-playlist").child(userId).orderByChild("tag").equalTo(TAG);
-            }
+
+                //navigate to child node of specific book, tag attribute
+
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+                ref.child("user-playlist").child(userId).child(key).child("tag").setValue(TAG);
+
+                edit_view_tag.getText().clear();
+                  }
         });
 
         as_button_remove.setOnClickListener(new View.OnClickListener() {
