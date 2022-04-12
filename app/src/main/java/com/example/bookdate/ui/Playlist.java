@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -31,7 +32,8 @@ public class Playlist {
     private static final String TAG = "NewPlayList";
     public ArrayList<Post> resultplaylist = new ArrayList<Post>();
     ListView mListView;
-
+    public ArrayList<String>tags= new ArrayList<>();
+    PlaylistAdapter adapter;
 
     public Playlist() {
     }
@@ -78,14 +80,21 @@ public class Playlist {
 //        RetrievePlaylist();
     }
     public Post showDetails(int position){
-        PlaylistAdapter adapter = new PlaylistAdapter(context, R.layout.playlist_book, resultplaylist);
+       adapter = new PlaylistAdapter(context, R.layout.playlist_book, resultplaylist);
+       // PlaylistAdapter adapter = new PlaylistAdapter(context, R.layout.playlist_book, resultplaylist);
         mListView.setAdapter(adapter);
         return adapter.getItem(position);
     }
 
     public void ShowPlaylist() {
-        PlaylistAdapter adapter = new PlaylistAdapter(context, R.layout.playlist_book, resultplaylist);
+        adapter = new PlaylistAdapter(context, R.layout.playlist_book, resultplaylist);
+        //PlaylistAdapter adapter = new PlaylistAdapter(context, R.layout.playlist_book, resultplaylist);
         mListView.setAdapter(adapter);
+    }
+
+    public void update() {
+         adapter.notifyDataSetChanged();
+
     }
 
     public ArrayList<Post> RetrievePlaylist() {
@@ -98,6 +107,7 @@ public class Playlist {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot playlist: dataSnapshot.getChildren()) {
                     Post post = playlist.getValue(Post.class);
+                   // Post post = playlist.child("tag");
                     resultplaylist.add(post);
                 }
                 //cuando se ejecuta este metodo y este full el post, se ejecuta el metodo q va a mostrar los datos en la pantalla
@@ -109,8 +119,67 @@ public class Playlist {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+
         return resultplaylist;
     }
+
+    public ArrayList<Post> RetrievePlaylist(String tag) {
+        String userId = mAuth.getCurrentUser().getUid();
+        DatabaseReference ref = db.getReference("/user-playlist/" + userId + "/" );
+
+// Attach a listener to read the data at our posts reference
+
+        ref.orderByChild("tag").equalTo(tag).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot playlist: dataSnapshot.getChildren()) {
+                    Post post = playlist.getValue(Post.class);
+                    resultplaylist.add(post);
+                }
+
+                ShowPlaylist();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return resultplaylist;
+    }
+
+
+    public ArrayList<String> RetrieveTags() {
+        String userId = mAuth.getCurrentUser().getUid();
+        DatabaseReference ref = db.getReference("/user-playlist/" + userId + "/" );
+
+// Attach a listener to read the tag data at the posts reference
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot playlist: dataSnapshot.getChildren()) {
+                    String tag = (String) playlist.child("tag").getValue();  //get the names of the tags
+
+                    //add the tag if it is unique
+
+                    if (!tags.contains(tag))
+                    {
+                    tags.add(tag);
+                    }
+
+                    //Log.d("Tag: ", tags.get(0));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+       // return list of all tags
+        return tags;
+}
 }
 
 

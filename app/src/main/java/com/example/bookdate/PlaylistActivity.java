@@ -7,11 +7,13 @@ import android.view.MenuInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
@@ -36,13 +38,15 @@ import cz.msebera.android.httpclient.Header;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PlaylistActivity extends AppCompatActivity{
-    ListView as_list_view_playlist;
+public class PlaylistActivity extends AppCompatActivity {
+    public ListView as_list_view_playlist;
     public static final String BOOK_DETAIL_KEY = "playlist";
     PlaylistAdapter playlistAdapter;
-    Playlist playlist;
-    ArrayList<Post> arrayList;
-
+   public Playlist playlist;
+   public ArrayList<Post> arrayList;
+    ArrayList<String> Tags ;
+    public String choice;
+    Spinner spinner;
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +57,70 @@ public class PlaylistActivity extends AppCompatActivity{
 
             playlist = new Playlist(this,as_list_view_playlist);
 
-            arrayList=playlist.RetrievePlaylist();
+             arrayList=playlist.RetrievePlaylist();
 
-            setupBookSelectedListener();
+             //use string param to only show certain tag in the listview
+           //arrayList=playlist.RetrievePlaylist("Fiction");
 
-        }
+          setupBookSelectedListener();
+
+//retrieve the tags from the database
+
+            Tags=playlist.RetrieveTags();
+
+            //default to display all books
+            Tags.add(0,"All");
+
+            spinner = (Spinner) findViewById(R.id.spinner);
+
+           ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Tags);
+
+          adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+          spinner.setAdapter(adapter);
+
+
+          tagListener();
+
+
+    }
+
+    private void tagListener(){
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                choice =(String) adapterView.getItemAtPosition(i);
+
+                Log.d("Choice: ", choice);
+                //playlist = new Playlist(getApplicationContext(),as_list_view_playlist);
+
+                //Toast.makeText(adapterView.getContext(), (CharSequence) choice, Toast.LENGTH_SHORT).show();
+
+
+                if(choice.equals("All")){
+                    arrayList=playlist.RetrievePlaylist();
+                }
+                else {
+                    arrayList=playlist.RetrievePlaylist(choice);
+                }
+
+                //update listview
+                //  PlaylistAdapter adapter = new PlaylistAdapter(getApplicationContext(), R.layout.playlist_book, playlist.resultplaylist);
+                //  as_list_view_playlist.setAdapter(adapter);
+
+                // setupBookSelectedListener();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+        });
+
+    }
 
 
     private void setupBookSelectedListener() {
@@ -79,7 +142,7 @@ public class PlaylistActivity extends AppCompatActivity{
 
         });
     }
-    public void sharePlaylist(View view){
+    public void sharePlaylist(){
             String message="";
         for (int title = 0; title < arrayList.size(); title++) {
             message=message+arrayList.get(title).title+" by " + arrayList.get(title).author+"\n";
@@ -120,4 +183,28 @@ public class PlaylistActivity extends AppCompatActivity{
         finish();
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_book_detail, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == R.id.action_share) {
+            sharePlaylist();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
