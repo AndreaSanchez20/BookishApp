@@ -33,7 +33,6 @@ public class Playlist {
     public ArrayList<Post> resultplaylist = new ArrayList<Post>();
     ListView mListView;
     public ArrayList<String>tags= new ArrayList<>();
-    PlaylistAdapter adapter;
 
     public Playlist() {
     }
@@ -68,7 +67,7 @@ public class Playlist {
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
         String key = mDatabase.child("posts").push().getKey();
-        Post post = new Post(userId, author, title, body, 0,url, key, "null");
+        Post post = new Post(userId, author, title, body, 0,url, key, "All");
         Map<String, Object> postValues = post.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
@@ -76,30 +75,24 @@ public class Playlist {
         childUpdates.put("/user-playlist/" + userId + "/" + key, postValues);
 
         mDatabase.updateChildren(childUpdates);
-//        //andrela
-//        RetrievePlaylist();
+
     }
     public Post showDetails(int position){
-       adapter = new PlaylistAdapter(context, R.layout.playlist_book, resultplaylist);
-       // PlaylistAdapter adapter = new PlaylistAdapter(context, R.layout.playlist_book, resultplaylist);
+       PlaylistAdapter adapter = new PlaylistAdapter(context, R.layout.playlist_book, resultplaylist);
         mListView.setAdapter(adapter);
         return adapter.getItem(position);
     }
 
     public void ShowPlaylist() {
-        adapter = new PlaylistAdapter(context, R.layout.playlist_book, resultplaylist);
-        //PlaylistAdapter adapter = new PlaylistAdapter(context, R.layout.playlist_book, resultplaylist);
+          PlaylistAdapter adapter = new PlaylistAdapter(context, R.layout.playlist_book, resultplaylist);
         mListView.setAdapter(adapter);
-    }
-
-    public void update() {
-         adapter.notifyDataSetChanged();
-
     }
 
     public ArrayList<Post> RetrievePlaylist() {
         String userId = mAuth.getCurrentUser().getUid();
         DatabaseReference ref = db.getReference("/user-playlist/" + userId + "/" );
+
+        resultplaylist.clear();
 
 // Attach a listener to read the data at our posts reference
         ref.addValueEventListener(new ValueEventListener() {
@@ -123,10 +116,12 @@ public class Playlist {
         return resultplaylist;
     }
 
+    //retrieve playlist filtered by tag
     public ArrayList<Post> RetrievePlaylist(String tag) {
         String userId = mAuth.getCurrentUser().getUid();
         DatabaseReference ref = db.getReference("/user-playlist/" + userId + "/" );
 
+        resultplaylist.clear();
 // Attach a listener to read the data at our posts reference
 
         ref.orderByChild("tag").equalTo(tag).addValueEventListener(new ValueEventListener() {
@@ -142,7 +137,6 @@ public class Playlist {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
         return resultplaylist;
@@ -167,8 +161,6 @@ public class Playlist {
                     {
                     tags.add(tag);
                     }
-
-                    //Log.d("Tag: ", tags.get(0));
                 }
             }
 
@@ -177,6 +169,7 @@ public class Playlist {
 
             }
         });
+
        // return list of all tags
         return tags;
 }

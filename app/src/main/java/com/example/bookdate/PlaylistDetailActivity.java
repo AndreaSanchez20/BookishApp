@@ -76,15 +76,16 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         String cover = (String) getIntent().getSerializableExtra("cover");
         Picasso.with(this).load(Uri.parse(cover)).error(R.drawable.ic_no_cover).into(ivBookCover);
 
-       // tag_text = (String) getIntent().getSerializableExtra("tag");
-        //TAG
-
-
 
         button_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TAG = edit_view_tag.getText().toString();
+
+                //add book to default list if no tag present
+                if (TAG.equals("")){
+                    TAG="All";
+                }
 
                 //navigate to child node of specific book, tag attribute
 
@@ -93,7 +94,11 @@ public class PlaylistDetailActivity extends AppCompatActivity {
                 ref.child("user-playlist").child(userId).child(key).child("tag").setValue(TAG);
 
                 edit_view_tag.getText().clear();
-                  }
+
+                Intent intent = new Intent(PlaylistDetailActivity.this, PlaylistActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
         as_button_remove.setOnClickListener(new View.OnClickListener() {

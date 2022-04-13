@@ -42,10 +42,8 @@ public class PlaylistActivity extends AppCompatActivity {
     public ListView as_list_view_playlist;
     public static final String BOOK_DETAIL_KEY = "playlist";
     PlaylistAdapter playlistAdapter;
-   public Playlist playlist;
-   public ArrayList<Post> arrayList;
-    ArrayList<String> Tags ;
-    public String choice;
+    public Playlist playlist;
+    public ArrayList<Post> arrayList;
     Spinner spinner;
 
     @Override
@@ -57,14 +55,13 @@ public class PlaylistActivity extends AppCompatActivity {
 
             playlist = new Playlist(this,as_list_view_playlist);
 
-             arrayList=playlist.RetrievePlaylist();
+            // arrayList=playlist.RetrievePlaylist();
 
-             //use string param to only show certain tag in the listview
-           //arrayList=playlist.RetrievePlaylist("Fiction");
+            ArrayList<String> Tags ;
 
-          setupBookSelectedListener();
+            setupBookSelectedListener();
 
-//retrieve the tags from the database
+            //retrieve the tags from the database
 
             Tags=playlist.RetrieveTags();
 
@@ -73,15 +70,13 @@ public class PlaylistActivity extends AppCompatActivity {
 
             spinner = (Spinner) findViewById(R.id.spinner);
 
-           ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Tags);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Tags);
 
-          adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-          spinner.setAdapter(adapter);
+            spinner.setAdapter(adapter);
 
-
-          tagListener();
-
+            tagListener();
 
     }
 
@@ -91,37 +86,26 @@ public class PlaylistActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
+                String choice;
                 choice =(String) adapterView.getItemAtPosition(i);
 
                 Log.d("Choice: ", choice);
-                //playlist = new Playlist(getApplicationContext(),as_list_view_playlist);
-
-                //Toast.makeText(adapterView.getContext(), (CharSequence) choice, Toast.LENGTH_SHORT).show();
-
 
                 if(choice.equals("All")){
                     arrayList=playlist.RetrievePlaylist();
                 }
                 else {
+                    //use string param to only show certain tag in the listview
+
                     arrayList=playlist.RetrievePlaylist(choice);
                 }
-
-                //update listview
-                //  PlaylistAdapter adapter = new PlaylistAdapter(getApplicationContext(), R.layout.playlist_book, playlist.resultplaylist);
-                //  as_list_view_playlist.setAdapter(adapter);
-
-                // setupBookSelectedListener();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
-
         });
-
     }
-
 
     private void setupBookSelectedListener() {
         as_list_view_playlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -138,8 +122,6 @@ public class PlaylistActivity extends AppCompatActivity {
                 intent.putExtra("tag", playlist.showDetails(position).tag);
                 startActivity(intent);
             }
-
-
         });
     }
     public void sharePlaylist(){
@@ -177,11 +159,10 @@ public class PlaylistActivity extends AppCompatActivity {
 
     public void goToProfile(View view){
         String[] userInfo=getIntent().getStringArrayExtra("key4");
-        Intent intent = new Intent(PlaylistActivity.this, PlaylistActivity.class);
+        Intent intent = new Intent(PlaylistActivity.this, UserProfile.class);
         intent.putExtra("key2",userInfo);
         startActivity(intent);
         finish();
-
     }
 
     @Override
