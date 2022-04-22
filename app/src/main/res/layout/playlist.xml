@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".PlaylistActivity">
 
     <LinearLayout
@@ -13,29 +13,31 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="5">
-    <LinearLayout
-        android:id="@+id/linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="5">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:text="My Playlist"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:orientation="horizontal"
+            android:weightSum="5">
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="216dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1" />
-        <!--android:onClick="sharePlaylist"-->
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="My Playlist"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:background="@color/button" />
+            <!--android:onClick="sharePlaylist"-->
+        </LinearLayout>
 
 
         <LinearLayout
@@ -52,58 +54,55 @@
         </LinearLayout>
     </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/black"
-            android:backgroundTint="@color/black"
-            android:gravity="bottom"
-            android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@color/black"
+        android:backgroundTint="@color/black"
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/homeButton"
-                android:layout_width="100sp"
-                android:layout_height="50sp"
-                android:backgroundTint="@color/button"
-                android:onClick="goToHome"
-                android:src="@drawable/home"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <ImageButton
+            android:id="@+id/homeButton"
+            android:layout_width="100sp"
+            android:layout_height="50sp"
+            android:backgroundTint="@color/button"
+            android:onClick="goToHome"
+            android:src="@drawable/home"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <ImageButton
-                android:id="@+id/profileButton"
-                android:layout_width="100sp"
-                android:layout_height="50sp"
-                android:backgroundTint="@color/button"
-                android:onClick="goToProfile"
-                android:src="@drawable/user"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <ImageButton
+            android:id="@+id/profileButton"
+            android:layout_width="100sp"
+            android:layout_height="50sp"
+            android:backgroundTint="@color/button"
+            android:onClick="goToProfile"
+            android:src="@drawable/user"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <ImageButton
-                android:id="@+id/searchButton"
-                android:layout_width="100sp"
-                android:layout_height="50sp"
-                android:backgroundTint="@color/button"
-                android:onClick="goToSearch"
-                android:src="@drawable/search"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="100sp"
+            android:layout_height="50sp"
+            android:backgroundTint="@color/button"
+            android:onClick="goToSearch"
+            android:src="@drawable/search"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <ImageButton
-                android:id="@+id/playlistButton"
-                android:layout_width="100sp"
-                android:layout_height="50sp"
-                android:backgroundTint="@color/button"
+        <ImageButton
+            android:id="@+id/playlistButton"
+            android:layout_width="100sp"
+            android:layout_height="50sp"
+            android:backgroundTint="@color/button"
 
-                android:src="@drawable/playlist_icon"
-                tools:ignore="SpeakableTextPresentCheck" />
-        </LinearLayout>
-
-
-
+            android:src="@drawable/playlist_icon"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </LinearLayout>
 
 
     <ProgressBar
