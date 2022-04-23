@@ -5,16 +5,19 @@ import static com.google.android.gms.wearable.DataMap.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bookdate.models.*;
 import com.example.bookdate.ui.Playlist;
@@ -48,6 +51,7 @@ public class PlaylistDetailActivity extends AppCompatActivity {
     private EditText edit_view_tag;
     private Button button_submit;
     String TAG="";
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,17 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         tvPageCount = (TextView) findViewById(R.id.tvPageCount);
         ivBookCover = (ImageView) findViewById(R.id.ivBookCover);
         as_button_remove = findViewById(R.id.button_add);
+
+        //dialog for deleting confirmation
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.deleting_confirmation);
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(false);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
+
+        Button btnYes = dialog.findViewById(R.id.btnYes);
+        Button btnNo = dialog.findViewById(R.id.btnNo);
 
         text_view_tag = (TextView) findViewById(R.id.text_view_tag_name);
         edit_view_tag = (EditText) findViewById(R.id.edit_text_tag);
@@ -75,6 +90,42 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         String key=(String) getIntent().getSerializableExtra("key");
         String cover = (String) getIntent().getSerializableExtra("cover");
         Picasso.with(this).load(Uri.parse(cover)).error(R.drawable.ic_no_cover).into(ivBookCover);
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                Query databaseQuery = ref.child("user-playlist").child(userId).orderByChild("title").equalTo(title);
+
+                databaseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot datasSnapshot: dataSnapshot.getChildren()) {
+                            datasSnapshot.getRef().removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "onCancelled", databaseError.toException());
+                    }
+                });
+                Intent intent = new Intent(PlaylistDetailActivity.this, PlaylistActivity.class);
+                startActivity(intent);
+                finish();
+
+                Toast.makeText(getApplicationContext(), "Removed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Canceled", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
 
 
         button_submit.setOnClickListener(new View.OnClickListener() {
@@ -104,25 +155,7 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         as_button_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                Query databaseQuery = ref.child("user-playlist").child(userId).orderByChild("title").equalTo(title);
-
-                databaseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot datasSnapshot: dataSnapshot.getChildren()) {
-                            datasSnapshot.getRef().removeValue();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.e(TAG, "onCancelled", databaseError.toException());
-                    }
-                });
-                Intent intent = new Intent(PlaylistDetailActivity.this, PlaylistActivity.class);
-                startActivity(intent);
-                finish();
+                dialog.show();
             }
         });
     }
