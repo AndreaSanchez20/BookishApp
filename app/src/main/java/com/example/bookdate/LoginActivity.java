@@ -51,4 +51,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void goToSearch(View view){
+        String[] userInfo=getIntent().getStringArrayExtra("key4");
+        Intent intent = new Intent(LoginActivity.this, BookListActivity.class);
+        intent.putExtra("key3",userInfo);
+        startActivity(intent);
+        finish();
+    }
 }

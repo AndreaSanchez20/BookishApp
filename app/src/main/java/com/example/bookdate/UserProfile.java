@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.bookdate.models.User;
 import com.google.firebase.firestore.DocumentReference;
+//import com.google.firebase.firestore.auth.User;
 import com.squareup.picasso.Picasso;
 
 public class UserProfile extends AppCompatActivity {
@@ -43,12 +44,29 @@ public class UserProfile extends AppCompatActivity {
         finish();
 
     }
-    public void goToSearch(View view){
+
+    /*public void goToSearch(View view){
         String[] userInfo=getIntent().getStringArrayExtra("key2");
         Intent intent = new Intent(UserProfile.this, BookListActivity.class);
         intent.putExtra("key3",userInfo);
         startActivity(intent);
         finish();
+    }*/
+    public void goToSearchOpenLibrary(View view){
+        String[] userInfo=getIntent().getStringArrayExtra("key");
+        Intent intent = new Intent(UserProfile.this, BookListActivity.class);
+        intent.putExtra("key3",userInfo); // para que es esto?
+        intent.putExtra("source","OpenLibrary");
+        startActivity(intent);
+    }
+
+    //IEEE API new button
+    public void goToSearchIEEE(View view){
+        String[] userInfo=getIntent().getStringArrayExtra("key2");
+        Intent intent = new Intent(UserProfile.this, BookListActivity.class);
+        intent.putExtra("key3",userInfo);
+        intent.putExtra("source","IEEE");
+        startActivity(intent);
     }
 
     public void goToPlaylist(View view){

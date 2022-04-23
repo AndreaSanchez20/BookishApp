@@ -195,6 +195,23 @@ public class BookListActivity extends AppCompatActivity {
 
     }
 
+    public void goToSearchOpenLibrary(View view){
+        String[] userInfo=getIntent().getStringArrayExtra("key");
+        Intent intent = new Intent(BookListActivity.this, BookListActivity.class);
+        intent.putExtra("key3",userInfo); // para que es esto?
+        intent.putExtra("source","OpenLibrary");
+        startActivity(intent);
+    }
+
+    //IEEE API new button
+    public void goToSearchIEEE(View view){
+        String[] userInfo=getIntent().getStringArrayExtra("key2");
+        Intent intent = new Intent(BookListActivity.this, BookListActivity.class);
+        intent.putExtra("key3",userInfo);
+        intent.putExtra("source","IEEE");
+        startActivity(intent);
+    }
+
 }
 
 

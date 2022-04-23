@@ -157,6 +157,15 @@ public class PlaylistActivity extends AppCompatActivity {
         finish();
     }
 
+//search IEEE API with new button
+   /* public void goToSearchIEEE(View view){
+        String[] userInfo=getIntent().getStringArrayExtra("key2");
+        Intent intent = new Intent(PlaylistActivity.this, BookListActivity.class);
+        intent.putExtra("key3",userInfo);
+        startActivity(intent);
+        finish();
+    }*/
+
     public void goToProfile(View view){
         String[] userInfo=getIntent().getStringArrayExtra("key4");
         Intent intent = new Intent(PlaylistActivity.this, UserProfile.class);
@@ -188,4 +197,19 @@ public class PlaylistActivity extends AppCompatActivity {
     }
 
 
+    public void goToSearchOpenLibrary(View view){
+        String[] userInfo=getIntent().getStringArrayExtra("key");
+        Intent intent = new Intent(PlaylistActivity.this, BookListActivity.class);
+        intent.putExtra("key3",userInfo); // para que es esto?
+        intent.putExtra("source","OpenLibrary");
+        startActivity(intent);
+    }
+
+    public void goToSearchIEEE(View view){
+        String[] userInfo=getIntent().getStringArrayExtra("key");
+        Intent intent = new Intent(PlaylistActivity.this, BookListActivity.class);
+        intent.putExtra("key3",userInfo);
+        intent.putExtra("source","IEEE");
+        startActivity(intent);
+    }
 }
