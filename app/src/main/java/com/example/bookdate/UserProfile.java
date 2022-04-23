@@ -104,6 +104,23 @@ public class UserProfile extends AppCompatActivity implements SeekBar.OnSeekBarC
 
     }
 
+    public void goToSearchOpenLibrary(View view){
+        String[] userInfo=getIntent().getStringArrayExtra("key2");
+        Intent intent = new Intent(UserProfile.this, BookListActivity.class);
+        intent.putExtra("key3",userInfo); // para que es esto?
+        intent.putExtra("source","OpenLibrary");
+        startActivity(intent);
+    }
+
+    //IEEE API new button
+    public void goToSearchIEEE(View view){
+        String[] userInfo=getIntent().getStringArrayExtra("key2");
+        Intent intent = new Intent(UserProfile.this, BookListActivity.class);
+        intent.putExtra("key3",userInfo);
+        intent.putExtra("source","IEEE");
+        startActivity(intent);
+    }
+
 
     @Override
     public void onProgressChanged(SeekBar sBar, int progress, boolean fromUser) {

@@ -216,6 +216,7 @@
             android:src="@drawable/search"
             tools:ignore="SpeakableTextPresentCheck"
             android:onClick="goToSearchOpenLibrary"/>
+
         <ImageButton
             android:id="@+id/IEEEsearchButton"
             android:layout_width="80sp"
@@ -223,7 +224,7 @@
             android:backgroundTint="@color/button"
             android:src="@drawable/ieee_search"
             tools:ignore="SpeakableTextPresentCheck"
-            android:onClick="goToSearchOpenLibrary"/>
+            android:onClick="goToSearchIEEE"/>
 
         <ImageButton
             android:id="@+id/playlistButton"
