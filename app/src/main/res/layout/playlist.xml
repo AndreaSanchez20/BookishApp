@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlaylistActivity">
+    tools:context=".PlaylistActivity"
+    android:background="@color/background">
 
     <LinearLayout
         android:id="@+id/linear_layout_screen"
@@ -30,10 +31,11 @@
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="216dp"
+            android:layout_width="240dp"
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@color/button"/>
         <!--android:onClick="sharePlaylist"-->
     </LinearLayout>
 
