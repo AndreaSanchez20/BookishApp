@@ -18,7 +18,9 @@
 
     </FrameLayout>
 
-    <Button
+        <com.google.android.material.button.MaterialButton
+        app:icon="@drawable/user"
+        app:iconGravity="textStart"
         android:id="@+id/button"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -32,7 +34,9 @@
         app:layout_constraintVertical_bias="0.266"
         android:layout_margin="15dp"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        app:icon="@drawable/search"
+        app:iconGravity="textStart"
         android:id="@+id/button2"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -46,7 +50,9 @@
         app:layout_constraintVertical_bias="0.383"
         android:layout_margin="15dp"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        app:icon="@drawable/ic_baseline_menu_book_24"
+        app:iconGravity="textStart"
         android:id="@+id/buttonIEEE"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -60,7 +66,9 @@
         app:layout_constraintVertical_bias="0.499"
         android:layout_margin="15dp"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        app:icon="@drawable/playlist_icon"
+        app:iconGravity="textStart"
         android:id="@+id/button3"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
