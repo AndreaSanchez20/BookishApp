@@ -55,8 +55,6 @@ public class PlaylistActivity extends AppCompatActivity {
 
             playlist = new Playlist(this,as_list_view_playlist);
 
-            // arrayList=playlist.RetrievePlaylist();
-
             ArrayList<String> Tags ;
 
             setupBookSelectedListener();
@@ -65,9 +63,10 @@ public class PlaylistActivity extends AppCompatActivity {
 
             Tags=playlist.RetrieveTags();
 
-            //default to display all books
+            //default tag to display all books
             Tags.add(0,"All");
 
+            //set spinner to list tags
             spinner = (Spinner) findViewById(R.id.spinner);
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Tags);
@@ -76,7 +75,7 @@ public class PlaylistActivity extends AppCompatActivity {
 
             spinner.setAdapter(adapter);
 
-            tagListener();
+            tagListener(); //call listener for user selection of tags
 
     }
 
@@ -86,12 +85,15 @@ public class PlaylistActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
+                //store user selection in variable
                 String choice;
                 choice =(String) adapterView.getItemAtPosition(i);
 
                 Log.d("Choice: ", choice);
 
+
                 if(choice.equals("All")){
+                    //lists all books in database
                     arrayList=playlist.RetrievePlaylist();
                 }
                 else {
