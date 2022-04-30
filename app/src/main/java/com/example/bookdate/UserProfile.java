@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.example.bookdate.models.User;
 import com.google.firebase.firestore.DocumentReference;
 //import com.google.firebase.firestore.auth.User;
 import com.squareup.picasso.Picasso;
