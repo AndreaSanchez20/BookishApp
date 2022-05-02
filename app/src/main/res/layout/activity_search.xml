@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".Search">
 
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/image_view_find"
+        android:src="@drawable/search4book"/>
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

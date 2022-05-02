@@ -10,6 +10,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="5">
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_view_find"/>
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="match_parent"

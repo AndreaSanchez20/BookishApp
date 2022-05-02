@@ -26,11 +26,21 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+/*
+* CNIT 425: BOOKISH APP PROJECT
+* by: Andrea Sanchez, Onyi Nwogu, Xiaoyu Guo
+* Bookish is a friendly mobile application for people who enjoy reading where you can share/keep track of their readings,
+* and easily find what books to read next. It contains a search functionality to search for books from the OpenLibrary API
+* and to search for research from the IEEE Xplore API. Bookish allows users to categorize and organize their book lists by
+* adding a tag to each book in their playlist. Once they submit a tag in the book, it will be added into the spinner at the
+* booklist screen and they can fetch only those with the selected tag.
+ * */
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private GoogleSignInClient googleApiClient;
     TextView textView;
     int RC_SIGN_IN = 7;
+    public static String[] user;
   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 String personEmail = acct.getEmail();
                 String personId = acct.getId();
                 Uri personPhoto = acct.getPhotoUrl();
-                String[] user={personName,personGivenName,personFamilyName,personEmail,personId,personPhoto.toString()};
+                user= new String[]{personName, personGivenName, personFamilyName, personEmail, personId, personPhoto.toString()};
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 intent.putExtra("key",user);
                 startActivity(intent);
