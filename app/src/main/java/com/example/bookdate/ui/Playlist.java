@@ -100,7 +100,6 @@ public class Playlist {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot playlist: dataSnapshot.getChildren()) {
                     Post post = playlist.getValue(Post.class);
-                   // Post post = playlist.child("tag");
                     resultplaylist.add(post);
                 }
                 //cuando se ejecuta este metodo y este full el post, se ejecuta el metodo q va a mostrar los datos en la pantalla
@@ -122,7 +121,8 @@ public class Playlist {
         DatabaseReference ref = db.getReference("/user-playlist/" + userId + "/" );
 
         resultplaylist.clear();
-// Attach a listener to read the data at our posts reference
+
+        // Attach a listener to read the tag data at our posts reference
 
         ref.orderByChild("tag").equalTo(tag).addValueEventListener(new ValueEventListener() {
             @Override
@@ -155,7 +155,7 @@ public class Playlist {
                 for (DataSnapshot playlist: dataSnapshot.getChildren()) {
                     String tag = (String) playlist.child("tag").getValue();  //get the names of the tags
 
-                    //add the tag if it is unique
+                    //add the tag to array if it is unique
 
                     if (!tags.contains(tag))
                     {
